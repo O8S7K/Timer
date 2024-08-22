@@ -22,13 +22,21 @@ const startTimer = () => {
     playPauseButton.classList.add('running');
     circleElement.classList.add('animate');
     secondsSphere.style.animation = 'rotacion 60s linear infinite';
-    const startTime = Date.now() - elapsedTime;
     secondsSphere.style.animationPlayState = 'running';
     circleElement.classList.remove('reset');
+
+    const startTime = Date.now() - elapsedTime;
 
     timeInterval = setInterval(() => {
         elapsedTime = Date.now() - startTime;
         timeDisplay.textContent = formatTime(elapsedTime);
+
+        console.log(elapsedTime);
+        console.log(startTime)
+        console.log(Date.now())
+        console.log(formatTime(elapsedTime))
+
+
     }, 1000);
 }
 
