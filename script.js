@@ -11,14 +11,14 @@ let elapsedTime = 0;
 const togglePlayPause = () => {
     const isPaused = !playPauseButton.classList.contains('running');
     if (isPaused) {
-        startStopwatch();
+        startTimer();
     } else {
-        pauseStopwatch();
+        pauseTimer();
     }
 }
 
 // Function to start or resume the stopwatch
-const startStopwatch = () => {
+const startTimer = () => {
     playPauseButton.classList.add('running');
     circleElement.classList.add('animate');
     secondsSphere.style.animation = 'rotacion 60s linear infinite';
@@ -33,7 +33,7 @@ const startStopwatch = () => {
 }
 
 // Function to pause the stopwatch
-const pauseStopwatch = () => {
+const pauseTimer = () => {
     playPauseButton.classList.remove('running');
     circleElement.classList.remove('animate');
     secondsSphere.style.animationPlayState = 'paused';
@@ -41,20 +41,19 @@ const pauseStopwatch = () => {
 }
 
 // Function to stop and reset the stopwatch
-const resetStopwatch = () => {
-    playPauseButton.classList.remove('running');
-    circleElement.classList.add('reset');
-    circleElement.classList.remove('animate');
-    secondsSphere.style.animation = 'none';
+const resetTimer = () => {
     secondsSphere.style.transform = 'rotate(-90deg) translateX(60px)';
-    elapsedTime = 0;
+    secondsSphere.style.animation = 'none';
+    circleElement.classList.add('reset')
+    playPauseButton.classList.remove('running');
+    runningTime = 0;
     clearInterval(stopwatchInterval);
-    stopwatchDisplay.textContent = '00:00';
+    stopwatch.textContent = '00:00';
 }
 
 // Function to format time into MM:SS
-const formatTime = (timeInMilliseconds) => {
-    const totalSeconds = Math.floor(timeInMilliseconds / 1000);
+const formatTime = (elapsedTime) => {
+    const totalSeconds = Math.floor(elapsedTime / 1000);
     const minutes = Math.floor(totalSeconds / 60);
     const seconds = totalSeconds % 60;
 
