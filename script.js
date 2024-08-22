@@ -1,10 +1,10 @@
 // Get references to the necessary HTML elements
-const stopwatchDisplay = document.getElementById('stopwatch');
+const timeDisplay = document.getElementById('time-counting');
 const playPauseButton = document.getElementById('play-pause');
 const secondsSphere = document.getElementById('seconds-sphere');
 const circleElement = document.querySelector('.circle');
 
-let stopwatchInterval;
+let timeInterval;
 let elapsedTime = 0;
 
 // Function to toggle between play and pause states
@@ -26,9 +26,9 @@ const startTimer = () => {
     secondsSphere.style.animationPlayState = 'running';
     circleElement.classList.remove('reset');
 
-    stopwatchInterval = setInterval(() => {
+    timeInterval = setInterval(() => {
         elapsedTime = Date.now() - startTime;
-        stopwatchDisplay.textContent = formatTime(elapsedTime);
+        timeDisplay.textContent = formatTime(elapsedTime);
     }, 1000);
 }
 
@@ -37,7 +37,7 @@ const pauseTimer = () => {
     playPauseButton.classList.remove('running');
     circleElement.classList.remove('animate');
     secondsSphere.style.animationPlayState = 'paused';
-    clearInterval(stopwatchInterval);
+    clearInterval(timeInterval);
 }
 
 // Function to stop and reset the stopwatch
@@ -47,8 +47,8 @@ const resetTimer = () => {
     circleElement.classList.add('reset')
     playPauseButton.classList.remove('running');
     runningTime = 0;
-    clearInterval(stopwatchInterval);
-    stopwatch.textContent = '00:00';
+    clearInterval(timeInterval);
+    timeDisplay.textContent = '00:00';
 }
 
 // Function to format time into MM:SS

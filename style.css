@@ -41,15 +41,15 @@ body {
   border-radius: 50%;
   background: conic-gradient(
     from 0deg,
-    rgba(255, 255, 255, 0.01) 0deg,
+    rgba(255, 255, 255, 0.0001) 0deg,
     rgba(255, 255, 255, 0.001) 30deg,
-    rgba(255, 255, 255, 0.1) 60deg,
+    rgba(255, 255, 255, 0.001) 60deg,
     rgba(255, 255, 255, 0.15) 90deg,
     rgba(255, 255, 255, 0.25) 120deg,
     rgba(255, 255, 255, 0.45) 150deg,
     rgba(255, 255, 255, 0.65) 180deg,
-    rgba(255, 255, 255, 0.7) 210deg,
-    rgba(255, 255, 255, 0.9) 270deg,
+    rgba(255, 255, 255, 0.6) 210deg,
+    rgba(255, 255, 255, 0.8) 270deg,
     rgba(255, 255, 255, 1) 360deg
   );
   mask: radial-gradient(circle, transparent 69%, black 51%);
