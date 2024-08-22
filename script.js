@@ -1,59 +1,65 @@
-const stopwatch = document.getElementById('stopwatch');
+// Get references to the necessary HTML elements
+const stopwatchDisplay = document.getElementById('stopwatch');
 const playPauseButton = document.getElementById('play-pause');
 const secondsSphere = document.getElementById('seconds-sphere');
-const circle = document.querySelector('.circle');
-
+const circleElement = document.querySelector('.circle');
 
 let stopwatchInterval;
-let runningTime = 0;
+let elapsedTime = 0;
 
-const playPause = () => {
+// Function to toggle between play and pause states
+const togglePlayPause = () => {
     const isPaused = !playPauseButton.classList.contains('running');
     if (isPaused) {
-        playPauseButton.classList.add('running');
-        circle.classList.add('animate');
-        start();
+        startStopwatch();
     } else {
-        playPauseButton.classList.remove('running');
-        circle.classList.remove('animate');
-        pause();
+        pauseStopwatch();
     }
 }
 
-const pause = () => {
-    secondsSphere.style.animationPlayState = 'paused';
-    circle.classList.remove('animate');
-    clearInterval(stopwatchInterval);
-}
-
-const stop = () => {
-    secondsSphere.style.transform = 'rotate(-90deg) translateX(60px)';
-    secondsSphere.style.animation = 'none';
-     circle.classList.add('reset')
-    playPauseButton.classList.remove('running');
-    runningTime = 0;
-    clearInterval(stopwatchInterval);
-    stopwatch.textContent = '00:00';
-}
-
-const start = () => {
+// Function to start or resume the stopwatch
+const startStopwatch = () => {
+    playPauseButton.classList.add('running');
+    circleElement.classList.add('animate');
     secondsSphere.style.animation = 'rotacion 60s linear infinite';
-    let startTime = Date.now() - runningTime;
+    const startTime = Date.now() - elapsedTime;
     secondsSphere.style.animationPlayState = 'running';
-    circle.classList.add('animate');
-    circle.classList.remove('reset')
-    stopwatchInterval = setInterval( () => {
-        runningTime = Date.now() - startTime;
-        stopwatch.textContent = calculateTime(runningTime);
-    }, 1000)
+    circleElement.classList.remove('reset');
+
+    stopwatchInterval = setInterval(() => {
+        elapsedTime = Date.now() - startTime;
+        stopwatchDisplay.textContent = formatTime(elapsedTime);
+    }, 1000);
 }
 
-const calculateTime = runningTime => {
-    const total_seconds = Math.floor(runningTime / 1000);
-    const total_minutes = Math.floor(total_seconds / 60);
+// Function to pause the stopwatch
+const pauseStopwatch = () => {
+    playPauseButton.classList.remove('running');
+    circleElement.classList.remove('animate');
+    secondsSphere.style.animationPlayState = 'paused';
+    clearInterval(stopwatchInterval);
+}
 
-    const display_seconds = (total_seconds % 60).toString().padStart(2, "0");
-    const display_minutes = total_minutes.toString().padStart(2, "0");
+// Function to stop and reset the stopwatch
+const resetStopwatch = () => {
+    playPauseButton.classList.remove('running');
+    circleElement.classList.add('reset');
+    circleElement.classList.remove('animate');
+    secondsSphere.style.animation = 'none';
+    secondsSphere.style.transform = 'rotate(-90deg) translateX(60px)';
+    elapsedTime = 0;
+    clearInterval(stopwatchInterval);
+    stopwatchDisplay.textContent = '00:00';
+}
 
-    return `${display_minutes}:${display_seconds}`
+// Function to format time into MM:SS
+const formatTime = (timeInMilliseconds) => {
+    const totalSeconds = Math.floor(timeInMilliseconds / 1000);
+    const minutes = Math.floor(totalSeconds / 60);
+    const seconds = totalSeconds % 60;
+
+    const paddedMinutes = minutes.toString().padStart(2, "0");
+    const paddedSeconds = seconds.toString().padStart(2, "0");
+
+    return `${paddedMinutes}:${paddedSeconds}`;
 }
